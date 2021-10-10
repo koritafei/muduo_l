@@ -1,0 +1,150 @@
+<mxfile host="65bd71144e">
+    <diagram id="eWdTaj8XdJYgArgOYiaR" name="poll模型">
+        <mxGraphModel dx="898" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Comic Sans MS;fontSize=18;" parent="1" source="2" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="poll" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Comic Sans MS;fontSize=18;" parent="1" source="3" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="处理监听套接字事件" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Comic Sans MS;fontSize=18;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="4" target="2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-20" y="330" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="40" y="330"/>
+                            <mxPoint x="40" y="100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="处理已连接套接字事件" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontSize=18;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="300" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="listenfd POLLIN事件到来&lt;br&gt;connfd = accept(...)&lt;br&gt;关注connfd的POLLIN事件" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=18;strokeColor=#000000;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="50" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="遍历已连接套接字符集&lt;br&gt;connfd POLLIN事件到来&lt;br&gt;read(connfd,...)&lt;br&gt;write(connfd,...)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=18;strokeColor=#000000;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="150" width="260" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="endArrow=none;dashed=1;html=1;fontFamily=Comic Sans MS;fontSize=18;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="180" y="210" as="sourcePoint"/>
+                        <mxPoint x="230" y="160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="" style="endArrow=none;dashed=1;html=1;fontFamily=Comic Sans MS;fontSize=18;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="4" target="10" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="190" y="220" as="sourcePoint"/>
+                        <mxPoint x="260" y="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="遍历已连接套接字符集&lt;br&gt;connfd POLLIN事件到来&lt;br&gt;read(connfd,...)&lt;br&gt;ret = write(connfd,buf, 10000)&lt;br&gt;if(ret &amp;lt; 10000){&lt;br&gt;将未发完数据添加到应用层缓冲区outbuffer&lt;br&gt;关注connfd的POLLOUT事件&lt;br&gt;}&lt;br&gt;connfd POLLOUT事件到来&lt;br&gt;取出应用层缓冲区的数据发送 write(connfd,...)&lt;br&gt;如果应用层缓冲区数据发送完毕，取消关注POLLOUT事件" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=18;strokeColor=#000000;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="280" width="500" height="270" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hf7MtQJrboErW-IPbMoo" name="epoll_wait">
+        <mxGraphModel dx="898" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="tmCTB_4Njeui5eomK07T-0"/>
+                <mxCell id="tmCTB_4Njeui5eomK07T-1" parent="tmCTB_4Njeui5eomK07T-0"/>
+                <mxCell id="tmCTB_4Njeui5eomK07T-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Comic Sans MS;fontSize=18;" edge="1" parent="tmCTB_4Njeui5eomK07T-1" source="tmCTB_4Njeui5eomK07T-3" target="tmCTB_4Njeui5eomK07T-5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-3" value="epoll_wait" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="tmCTB_4Njeui5eomK07T-1">
+                    <mxGeometry x="60" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Comic Sans MS;fontSize=18;" edge="1" parent="tmCTB_4Njeui5eomK07T-1" source="tmCTB_4Njeui5eomK07T-5" target="tmCTB_4Njeui5eomK07T-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-5" value="处理监听套接字事件" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="tmCTB_4Njeui5eomK07T-1">
+                    <mxGeometry x="60" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Comic Sans MS;fontSize=18;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="tmCTB_4Njeui5eomK07T-1" source="tmCTB_4Njeui5eomK07T-7" target="tmCTB_4Njeui5eomK07T-3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="-20" y="330" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="40" y="330"/>
+                            <mxPoint x="40" y="100"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-7" value="处理已连接套接字事件" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="tmCTB_4Njeui5eomK07T-1">
+                    <mxGeometry x="60" y="300" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-8" value="listenfd EPOLLIN事件到来&lt;br&gt;connfd = accept(...)&lt;br&gt;关注connfd的EPOLLIN事件" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=18;strokeColor=#000000;dashed=1;" vertex="1" parent="tmCTB_4Njeui5eomK07T-1">
+                    <mxGeometry x="250" y="50" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-10" value="" style="endArrow=none;dashed=1;html=1;fontFamily=Comic Sans MS;fontSize=18;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="tmCTB_4Njeui5eomK07T-1" target="tmCTB_4Njeui5eomK07T-8">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="180" y="210" as="sourcePoint"/>
+                        <mxPoint x="230" y="160" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-11" value="" style="endArrow=none;dashed=1;html=1;fontFamily=Comic Sans MS;fontSize=18;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="tmCTB_4Njeui5eomK07T-1" source="tmCTB_4Njeui5eomK07T-7">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="190" y="220" as="sourcePoint"/>
+                        <mxPoint x="250" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="tmCTB_4Njeui5eomK07T-12" value="遍历已连接套接字符集&lt;br&gt;connfd EPOLLIN事件到来&lt;br&gt;read(connfd,...)&lt;br&gt;ret = write(connfd,buf, 10000)&lt;br&gt;if(ret &amp;lt; 10000){&lt;br&gt;将未发完数据添加到应用层缓冲区outbuffer&lt;br&gt;关注connfd的EPOLLOUT事件&lt;br&gt;}&lt;br&gt;connfd EPOLLOUT事件到来&lt;br&gt;取出应用层缓冲区的数据发送 write(connfd,...)&lt;br&gt;如果应用层缓冲区数据发送完毕，取消关注EPOLLOUT事件" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=18;strokeColor=#000000;dashed=1;" vertex="1" parent="tmCTB_4Njeui5eomK07T-1">
+                    <mxGeometry x="250" y="170" width="500" height="270" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="JKWQRU0sJjZeEwGbC-8e" name="TimeStamp">
+        <mxGraphModel dx="898" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="KfOfAIsq6DU3QqtgoXPH-0"/>
+                <mxCell id="KfOfAIsq6DU3QqtgoXPH-1" parent="KfOfAIsq6DU3QqtgoXPH-0"/>
+                <mxCell id="KfOfAIsq6DU3QqtgoXPH-10" value="TimeStamp" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontFamily=Comic Sans MS;fontSize=18;" parent="KfOfAIsq6DU3QqtgoXPH-1" vertex="1">
+                    <mxGeometry x="250" y="150" width="480" height="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="KfOfAIsq6DU3QqtgoXPH-11" value="+ kMicroSecondsPerSeconds:int&#10;- microSecondsSinceEpoch_:int64_t" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Comic Sans MS;fontSize=18;" parent="KfOfAIsq6DU3QqtgoXPH-10" vertex="1">
+                    <mxGeometry y="26" width="480" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="KfOfAIsq6DU3QqtgoXPH-12" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="KfOfAIsq6DU3QqtgoXPH-10" vertex="1">
+                    <mxGeometry y="90" width="480" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="KfOfAIsq6DU3QqtgoXPH-13" value="+ TimeStamp()&#10;+ TimeStamp(microSecondsSinceEpoch:int64_t)&#10;+  swap(that : TimeStamp) : void&#10;+  toString() : string&#10;+  toFormattedString() : string&#10;+  valid() : bool&#10;+  microSecondsSinceEpoch() : int64_t&#10;+  secondsSinceEpoch() : time_t&#10;+  now() : TimeStamp&#10;+  invalid() : TimeStamp" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Comic Sans MS;fontSize=18;" parent="KfOfAIsq6DU3QqtgoXPH-10" vertex="1">
+                    <mxGeometry y="98" width="480" height="242" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="AnULQXPYPQH_ODBlJ3sR" name="AtomicIntegerT">
+        <mxGraphModel dx="898" dy="680" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="c07PVaWph4s3cM3swcAI-0"/>
+                <mxCell id="c07PVaWph4s3cM3swcAI-1" parent="c07PVaWph4s3cM3swcAI-0"/>
+                <mxCell id="xnT2_NNcQdIsFqjAwRVb-0" value="AtomicIntegerT" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="c07PVaWph4s3cM3swcAI-1">
+                    <mxGeometry x="250" y="140" width="480" height="340" as="geometry">
+                        <mxRectangle x="250" y="140" width="170" height="30" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="xnT2_NNcQdIsFqjAwRVb-1" value="- value: T" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="xnT2_NNcQdIsFqjAwRVb-0">
+                    <mxGeometry y="26" width="480" height="64" as="geometry"/>
+                </mxCell>
+                <mxCell id="xnT2_NNcQdIsFqjAwRVb-2" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="xnT2_NNcQdIsFqjAwRVb-0">
+                    <mxGeometry y="90" width="480" height="8" as="geometry"/>
+                </mxCell>
+                <mxCell id="xnT2_NNcQdIsFqjAwRVb-3" value="+ AtomicIntegerT()&#10;+ get() : T&#10;+ getAndAdd() : T&#10;+ addAndGet() : T&#10;+ incermentAndGet() : T&#10;+ decrementAndGet() : T&#10;+ add(x : T) : void&#10;+ increment() : void&#10;+ decrement() : void&#10;+ getAndSet(newvalue : T) : T" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="xnT2_NNcQdIsFqjAwRVb-0">
+                    <mxGeometry y="98" width="480" height="242" as="geometry"/>
+                </mxCell>
+                <mxCell id="xnT2_NNcQdIsFqjAwRVb-4" value="T : typename" style="shape=partialRectangle;html=1;top=1;align=left;dashed=1;fontFamily=Comic Sans MS;fontSize=18;" vertex="1" parent="c07PVaWph4s3cM3swcAI-1">
+                    <mxGeometry x="530" y="120" width="200" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -1,0 +1,13 @@
+add_executable(TimeStamp_unintest TimeStamp_unittest.cc)
+target_link_libraries(TimeStamp_unintest muduo_base)
+
+add_executable(Date_unitest Date_unittest.cc)
+target_link_libraries(Date_unitest muduo_base)
+
+add_executable(TimeZone_unittest TimeZone_unittest.cc)
+target_link_libraries(TimeZone_unittest muduo_base)
+
+add_executable(Atomic_unittest Atomic_unittest.cc)
+
+add_executable(Expection_unittest Expection_unittest.cc)
+target_link_libraries(Expection_unittest muduo_base)
