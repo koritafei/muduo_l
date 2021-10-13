@@ -9,5 +9,25 @@ target_link_libraries(TimeZone_unittest muduo_base)
 
 add_executable(Atomic_unittest Atomic_unittest.cc)
 
+add_executable(Mutex_unittest Mutex_unittest.cc)
+target_link_libraries(Mutex_unittest muduo_base)
+
 add_executable(Expection_unittest Expection_unittest.cc)
 target_link_libraries(Expection_unittest muduo_base)
+
+
+add_executable(Thread_unittest Thread_unittest.cc)
+target_link_libraries(Thread_unittest muduo_base)
+
+add_executable(CountDownLatch_unittest CountDownLatch_unittest.cc)
+target_link_libraries(CountDownLatch_unittest muduo_base)
+
+
+add_executable(BlockingQueue_unittest BlockingQueue_unittest.cc)
+target_link_libraries(BlockingQueue_unittest muduo_base)
+
+add_executable(BlockingQueue_bench BlockingQueue_bench.cc)
+target_link_libraries(BlockingQueue_bench muduo_base)
+
+add_executable(BoundedBlockingQueue_unittest BoundedBlockingQueue_unittest.cc)
+target_link_libraries(BoundedBlockingQueue_unittest muduo_base)

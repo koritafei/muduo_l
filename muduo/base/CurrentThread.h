@@ -12,7 +12,7 @@ namespace CurrentThread {
 extern __thread int         t_cachedTid;
 extern __thread char        t_tidString[32];
 extern __thread int         t_tidStringLength;
-extern __thread const char *t_theadName;
+extern __thread const char *t_threadName;
 
 void cacheTid();
 
@@ -33,7 +33,7 @@ inline int tidStringLength() {
 }
 
 inline const char *name() {
-  return t_theadName;
+  return t_threadName;
 }
 
 bool isMainThread();

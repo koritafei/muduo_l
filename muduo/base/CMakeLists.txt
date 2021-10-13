@@ -4,7 +4,11 @@ set(BASE_SRCS
     TimeZone.cc
     Thread.cc
     CurrentThread.cc 
-    Exception.cc)
+    Exception.cc
+    LogStream.cc 
+    Logging.cc
+    CountDownLatch.cc
+    Condition.cc)
 
 add_library(muduo_base ${BASE_SRCS})
 target_link_libraries(muduo_base pthread rt)

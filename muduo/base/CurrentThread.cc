@@ -8,6 +8,7 @@ namespace muduo {
 
 namespace CurrentThread {
 
+// __thread 表示每个线程一份数据，线程单独的数据
 __thread int         t_cachedTid = 0;
 __thread char        t_tidString[32];
 __thread int         t_tidStringLength = 6;
