@@ -8,7 +8,8 @@ set(BASE_SRCS
     LogStream.cc 
     Logging.cc
     CountDownLatch.cc
-    Condition.cc)
+    Condition.cc
+    ThreadPool.cc)
 
 add_library(muduo_base ${BASE_SRCS})
 target_link_libraries(muduo_base pthread rt)

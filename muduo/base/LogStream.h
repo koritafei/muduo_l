@@ -138,8 +138,8 @@ public:
     return operator<<(reinterpret_cast<const char*>(str));
   }
 
-  self& operator<<(std::string& str) {
-    buffer_.append(str.data(), str.size());
+  self& operator<<(const std::string& str) {
+    buffer_.append(str.c_str(), str.size());
     return *this;
   }
 

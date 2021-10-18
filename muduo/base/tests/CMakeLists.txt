@@ -31,3 +31,13 @@ target_link_libraries(BlockingQueue_bench muduo_base)
 
 add_executable(BoundedBlockingQueue_unittest BoundedBlockingQueue_unittest.cc)
 target_link_libraries(BoundedBlockingQueue_unittest muduo_base)
+
+add_executable(ThreadPool_unittest ThreadPool_unittest.cc)
+target_link_libraries(ThreadPool_unittest muduo_base)
+
+add_executable(Singleton_unittest Singleton_unittest.cc)
+target_link_libraries(Singleton_unittest muduo_base)
+
+
+add_executable(ThreadLocalSingle_unittest ThreadLocalSingle_unittest.cc)
+target_link_libraries(ThreadLocalSingle_unittest muduo_base)

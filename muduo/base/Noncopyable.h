@@ -9,8 +9,8 @@ public:
   Noncopyable &operator=(const Noncopyable &) = delete;
 
 protected:
-  Noncopyable()          = default;
-  virtual ~Noncopyable() = default;
+  Noncopyable()  = default;
+  ~Noncopyable() = default;
 };
 
 }  // namespace muduo

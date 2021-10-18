@@ -106,11 +106,11 @@ private:
   class UnassignGuard : Noncopyable {
   public:
     explicit UnassignGuard(MutexLock &owner) : owner_(owner) {
-      owner_.assignHolder();
+      owner_.unassignHolder();
     }
 
     ~UnassignGuard() {
-      owner_.unassignHolder();
+      owner_.assignHolder();
     }
 
   private:

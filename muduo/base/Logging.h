@@ -82,19 +82,16 @@ inline Logger::LogLevel Logger::logLevel() {
 }
 
 #define LOG_TRACE                                                              \
-  if (muduo::Logger::logLevel() <= muduo::Logger::TRACE) {                     \
-    muduo::Logger(__FILE__, __LINE__, muduo::Logger::TRACE, __func__).stream() \
-  }
+  if (muduo::Logger::logLevel() <= muduo::Logger::TRACE)                       \
+  muduo::Logger(__FILE__, __LINE__, muduo::Logger::TRACE, __func__).stream()
 
 #define LOG_DENUG                                                              \
-  if (muduo::Logger::logLevel() <= muduo::Logger::DENUG) {                     \
-    muduo::Logger(__FILE__, __LINE__, muduo::Logger::DEBUG, __func__).stream() \
-  }
+  if (muduo::Logger::logLevel() <= muduo::Logger::DENUG)                       \
+  muduo::Logger(__FILE__, __LINE__, muduo::Logger::DEBUG, __func__).stream()
 
 #define LOG_INFO                                                               \
-  if (muduo::Logger::logLevel() <= muduo::Logger::INFO) {                      \
-    muduo::Logger(__FILE__, __LINE__, muduo::Logger::INFO, __func__).stream()  \
-  }
+  if (muduo::Logger::logLevel() <= muduo::Logger::INFO)                        \
+  muduo::Logger(__FILE__, __LINE__).stream()
 
 #define LOG_WARN muduo::Logger(__FILE__, __LINE__, muduo::Logger::WARN).stream()
 

@@ -36,8 +36,8 @@ Logger::LogLevel g_loglevel = initLogLevel();
 const char *LogLevelName[Logger::NUM_LOG_LEVEL] = {
     "TRACE ",
     "DEBUG ",
-    "INFO ",
-    "WARN ",
+    "INFO  ",
+    "WARN  ",
     "ERROR ",
     "FATAL ",
 };
@@ -48,7 +48,7 @@ public:
   const unsigned length_;
 
   T(const char *str, unsigned length) : str_(str), length_(length) {
-    assert(strlen(str_) == length_);
+    assert(strlen(str) == length_);
   }
 
 };  // class T
@@ -130,11 +130,11 @@ void Logger::Impl::formatTime() {
   }
 
   if (g_logTimeZone.valid()) {
-    Fmt us(".%06d", microSeconds);
+    Fmt us(".%06d ", microSeconds);
     assert(us.length() == 8);
     stream_ << T(t_time, 17) << T(us.data(), 8);
   } else {
-    Fmt us(".%06dZ", microSeconds);
+    Fmt us(".%06dZ ", microSeconds);
     assert(us.length() == 9);
     stream_ << T(t_time, 17) << T(us.data(), 9);
   }
