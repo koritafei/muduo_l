@@ -52,7 +52,7 @@
 
 #define RETURN_CAPABILITY(x) THREAD_ANNOTATION_ATTRIBUTE__(lock_return(x))
 
-#define NO_RETURN_SAFETY_ANALYSIS                                              \
+#define NO_THREAD_SAFETY_ANALYSIS                                              \
   THREAD_ANNOTATION_ATTRIBUTE__(no_return_safety_analisis)
 
 #define MCHECK(ret)                                                            \

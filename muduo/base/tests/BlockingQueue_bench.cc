@@ -74,8 +74,8 @@ public:
   }
 
 private:
-  using TimestampQueue = muduo::BlockingQueue<std::pair<int, muduo::TimeStamp>>;
-  TimestampQueue        done_;
+  using TimeStampQueue = muduo::BlockingQueue<std::pair<int, muduo::TimeStamp>>;
+  TimeStampQueue        done_;
   muduo::CountDownLatch startLatch_, stopLatch_;
   std::vector<std::unique_ptr<muduo::BlockingQueue<int>>> queues_;
   std::vector<std::unique_ptr<muduo::Thread>>             threads_;

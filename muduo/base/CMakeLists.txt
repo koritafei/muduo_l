@@ -1,15 +1,20 @@
-set(BASE_SRCS 
-    TimeStamp.cc
-    Date.cc
-    TimeZone.cc
-    Thread.cc
-    CurrentThread.cc 
-    Exception.cc
-    LogStream.cc 
-    Logging.cc
-    CountDownLatch.cc
-    Condition.cc
-    ThreadPool.cc)
+set(base_SRCS
+  AsyncLogging.cc
+  Condition.cc
+  CountDownLatch.cc
+  CurrentThread.cc
+  Date.cc
+  Exception.cc
+  FileUtil.cc
+  LogFile.cc
+  Logging.cc
+  LogStream.cc
+  ProcessInfo.cc
+  Timestamp.cc
+  Thread.cc
+  ThreadPool.cc
+  TimeZone.cc
+  )
 
 add_library(muduo_base ${BASE_SRCS})
 target_link_libraries(muduo_base pthread rt)
