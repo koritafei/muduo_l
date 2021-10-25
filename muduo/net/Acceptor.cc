@@ -17,7 +17,7 @@ Acceptor::Acceptor(EventLoop *        loop,
                    const InetAddress &listenAddr,
                    bool               reuseport)
     : loop_(loop),
-      acceptSocket_(sockets::creaeteNonblockingOrDie(listenAddr.family())),
+      acceptSocket_(sockets::createNonblockingOrDie(listenAddr.family())),
       acceptChannel_(loop, acceptSocket_.fd()),
       listening_(false),
       idleFd_(::open("/dev/null", O_RDONLY | O_CLOEXEC)) {

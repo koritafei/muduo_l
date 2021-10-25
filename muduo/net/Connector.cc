@@ -59,7 +59,7 @@ void Connector::stopInLoop() {
 }
 
 void Connector::connect() {
-  int sockfd    = sockets::creaeteNonblockingOrDie(serverAddr_.family());
+  int sockfd    = sockets::createNonblockingOrDie(serverAddr_.family());
   int ret       = sockets::connect(sockfd, serverAddr_.getSockAddr());
   int saveErrno = (ret == 0) ? 0 : errno;
   switch (saveErrno) {
