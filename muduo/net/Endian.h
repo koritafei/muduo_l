@@ -1,5 +1,5 @@
-#ifndef __ENDIAN_H__
-#define __ENDIAN_H__
+#ifndef __ENDIAN__H__
+#define __ENDIAN__H__
 
 #include <endian.h>
 #include <stdint.h>
@@ -48,4 +48,4 @@ inline uint16_t networkTohost16(uint16_t net16) {
 
 }  // namespace muduo
 
-#endif /* __ENDIAN_H__ */
+#endif /* __ENDIAN__H__ */

@@ -41,3 +41,15 @@ target_link_libraries(Singleton_unittest muduo_base)
 
 add_executable(ThreadLocalSingle_unittest ThreadLocalSingle_unittest.cc)
 target_link_libraries(ThreadLocalSingle_unittest muduo_base)
+
+add_executable(Fork_unittest Fork_unittest.cc)
+target_link_libraries(Fork_unittest muduo_base)
+
+add_executable(LogFile_unittest LogFile_unittest.cc)
+target_link_libraries(LogFile_unittest muduo_base)
+
+add_executable(Logging_unittest Logging_unittest.cc)
+target_link_libraries(Logging_unittest muduo_base)
+
+add_executable(AsyncLogging_unittest AsyncLogging_unittest.cc)
+target_link_libraries(AsyncLogging_unittest muduo_base)

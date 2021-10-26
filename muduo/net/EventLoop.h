@@ -1,6 +1,7 @@
 #ifndef __EVENTLOOP_H__
 #define __EVENTLOOP_H__
 
+#include <atomic>
 #include <boost/any.hpp>
 #include <functional>
 #include <memory>

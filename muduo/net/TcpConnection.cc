@@ -100,9 +100,9 @@ void TcpConnection::sendInLoop(const StringPiece &message) {
 
 void TcpConnection::sendInLoop(const void *data, size_t len) {
   loop_->assertInLoopThread();
-  size_t nwrote     = 0;
-  size_t remaining  = len;
-  bool   faultError = false;
+  ssize_t nwrote     = 0;
+  size_t  remaining  = len;
+  bool    faultError = false;
 
   if (kDisconnected == state_) {
     LOG_WARN << "disconnected. give up";
@@ -112,7 +112,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len) {
   if (!channel_->isWriting() || 0 == outputBuffer_.readableBytes()) {
     nwrote = sockets::write(channel_->fd(), data, len);
 
-    if (0 <= nwrote) {
+    if (nwrote >= 0) {
       remaining = len - nwrote;
       if (0 == remaining && writeCompleteCallback_) {
         loop_->queueInLoop(

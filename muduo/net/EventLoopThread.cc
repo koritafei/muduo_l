@@ -7,10 +7,10 @@ using namespace muduo::net;
 
 EventLoopThread::EventLoopThread(const ThreadInitCallback &cb,
                                  const string &            name)
-    : loop_(nullptr),
+    : mutex_(),
+      loop_(nullptr),
       exiting_(false),
       thread_(std::bind(&EventLoopThread::threadFunc, this), name),
-      mutex_(),
       cond_(mutex_),
       callback_(cb) {
 }

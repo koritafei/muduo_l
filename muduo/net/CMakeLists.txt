@@ -16,8 +16,16 @@ set(net_SRCS
   Socket.cc
   SocketsOps.cc
   TcpConnection.cc
+  TcpServer.cc
+  TcpClient.cc
   Timer.cc
+  Poller.cc
   TimerQueue.cc
+  EventLoopThread.cc
+  EventLoopThreadPool.cc
+  poller/DefaultPoller.cc
+  poller/EpollPoller.cc
+  poller/PollPoller.cc
   )
 
 add_library(muduo_net ${net_SRCS})
@@ -31,28 +39,42 @@ install(TARGETS muduo_net DESTINATION lib)
 #install(TARGETS muduo_net_cpp11 DESTINATION lib)
 
 set(HEADERS
+  Acceptor.h
   Buffer.h
   Callbacks.h
   Channel.h
+  Connector.h
   Endian.h
   EventLoop.h
+  EventLoopThread.h
+  EventLoopThreadPool.h
   InetAddress.h
   TcpConnection.h
+  Poller.h
+  Socket.h
+  SocketsOps.h
+  TcpClient.h
+  TcpServer.h
+  TcpConnection.h
+  Timer.h
+  TimerQueue.h
   TimerId.h
+  poller/EpollPoller.h
+  poller/PollPoller.h
   )
 install(FILES ${HEADERS} DESTINATION include/muduo/net)
 
-add_subdirectory(http)
-add_subdirectory(inspect)
+# add_subdirectory(http)
+# add_subdirectory(inspect)
 
 if(MUDUO_BUILD_EXAMPLES)
   add_subdirectory(tests)
 endif()
 
-if(PROTOBUF_FOUND)
-  add_subdirectory(protobuf)
-  add_subdirectory(protorpc)
-else()
-  add_subdirectory(protobuf EXCLUDE_FROM_ALL)
-  add_subdirectory(protorpc EXCLUDE_FROM_ALL)
-endif()
+# if(PROTOBUF_FOUND)
+#   add_subdirectory(protobuf)
+#   add_subdirectory(protorpc)
+# else()
+#   add_subdirectory(protobuf EXCLUDE_FROM_ALL)
+#   add_subdirectory(protorpc EXCLUDE_FROM_ALL)
+# endif()

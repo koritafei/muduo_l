@@ -1,5 +1,5 @@
-#ifndef __POLLER_H__
-#define __POLLER_H__
+#ifndef __POLLER__H__
+#define __POLLER__H__
 
 #include <map>
 #include <vector>
@@ -43,4 +43,4 @@ private:
 
 }  // namespace muduo
 
-#endif /* __POLLER_H__ */
+#endif /* __POLLER__H__ */

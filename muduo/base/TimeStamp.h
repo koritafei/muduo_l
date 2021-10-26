@@ -60,7 +60,7 @@ private:
   int64_t microSecondsSinceEpoch_;
 };  // class TimeStamp
 
-inline bool operator<(TimeStamp &lhs, TimeStamp &rhs) {
+inline bool operator<(TimeStamp lhs, TimeStamp rhs) {
   return lhs.microSecondsSinceEpoch() < rhs.microSecondsSinceEpoch();
 }
 

@@ -1,3 +1,5 @@
+#include "SocketsOps.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -12,7 +14,6 @@
 #include "../base/Logging.h"
 #include "../base/Types.h"
 #include "Endian.h"
-#include "SocketsOps.h"
 
 using namespace muduo;
 using namespace muduo::net;
@@ -77,7 +78,7 @@ int sockets::createNonblockingOrDie(sa_family_t family) {
 #else
   int sockfd =
       ::socket(family, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_TCP);
-  if (0 < sockfd) {
+  if (0 > sockfd) {
     LOG_SYSFATAL << "sockets::createNonblockingOrDie";
   }
 #endif

@@ -1,4 +1,4 @@
-set(base_SRCS
+set(BASE_SRCS
   AsyncLogging.cc
   Condition.cc
   CountDownLatch.cc
@@ -10,7 +10,7 @@ set(base_SRCS
   Logging.cc
   LogStream.cc
   ProcessInfo.cc
-  Timestamp.cc
+  TimeStamp.cc
   Thread.cc
   ThreadPool.cc
   TimeZone.cc
