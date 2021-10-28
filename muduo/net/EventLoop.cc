@@ -1,6 +1,5 @@
 #include "EventLoop.h"
 
-#include <bits/stdint-uintn.h>
 #include <signal.h>
 #include <sys/eventfd.h>
 #include <unistd.h>
@@ -83,6 +82,9 @@ EventLoop::~EventLoop() {
   t_loopInThisThread = nullptr;
 }
 
+/**
+ * @brief 事件循环，不可跨线程调用，只能创建该对象的线程中调用
+ * */
 void EventLoop::loop() {
   assert(!looping_);
   assertInLoopThread();

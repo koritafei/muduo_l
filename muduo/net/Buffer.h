@@ -2,7 +2,6 @@
 #define __BUFFER_H__
 
 #include <assert.h>
-#include <bits/stdint-intn.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -19,7 +18,7 @@ namespace muduo {
 
 namespace net {
 
-class Buffer : public Copyable {
+class Buffer : public muduo::Copyable {
 public:
   static const size_t kCheapPrepend = 8;
   static const size_t kInitialSize  = 1024;

@@ -4,3 +4,9 @@ target_link_libraries(echoserver_unittest muduo_net)
 
 add_executable(echoclient_unittest EchoClient_unittest.cc)
 target_link_libraries(echoclient_unittest muduo_net)
+
+add_executable(EventLoop_unittest EventLoop_unittest.cc)
+target_link_libraries(EventLoop_unittest muduo_net)
+
+add_executable(TimeQueue_unittest TimeQueue_unittest.cc)
+target_link_libraries(TimeQueue_unittest muduo_net)

@@ -121,16 +121,16 @@ private:
   static const int kReadEvent;
   static const int kWriteEvent;
 
-  EventLoop *loop_;
-  const int  fd_;
-  int        events_;
-  int        revents_;
-  int        index_;
+  EventLoop *loop_;     // 所属EventLoop
+  const int  fd_;       // 文件描述符，不负责关闭
+  int        events_;   // 关注事件
+  int        revents_;  // poll/epoll事件的返回
+  int        index_;    // 表示poller事件数组中的序号
   bool       logHub_;
 
   std::weak_ptr<void> tie_;
   bool                tied_;
-  bool                eventHandling_;
+  bool                eventHandling_;  // 是否处在事件中
   bool                addedToLoop_;
 
   ReadEventCallback readCallback_;

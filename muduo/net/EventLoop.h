@@ -100,15 +100,15 @@ private:
   bool                           eventHandling_;
   bool                           callingPendingFunctors_;
   int64_t                        iteration_;
-  const pid_t                    threadId_;
+  const pid_t                    threadId_;  // 当前线程所属ID
   TimeStamp                      pollReturnTime_;
   std::unique_ptr<Poller>        poller_;
   std::unique_ptr<TimerQueue>    timerQueue_;
   int                            wakeupFd_;
   std::unique_ptr<Channel>       wakeupChannel_;
   boost::any                     context_;
-  ChannelList                    activeChannels_;
-  Channel *                      currentActiveChannel_;
+  ChannelList activeChannels_;        // Poller返回的活动通道
+  Channel *   currentActiveChannel_;  // 当前正在处理的活动通道
 
   mutable MutexLock                    mutex_;
   std::vector<Functor> pendingFunctor_ GUARDED_BY(mutex_);

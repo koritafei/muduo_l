@@ -58,6 +58,7 @@ void PollPoller::updateChannel(Channel *channel) {
   Poller::assertInLoopThread();
   LOG_TRACE << "fd = " << channel->fd() << " events = " << channel->events();
 
+  // index < 0 表示一个新的channel
   if (0 > channel->index()) {
     assert(channels_.find(channel->fd()) == channels_.end());
     struct pollfd pfd;
@@ -83,8 +84,9 @@ void PollPoller::updateChannel(Channel *channel) {
 
     pfd.revents = 0;
 
+    // 将通道设置为不关注事件，但不从Poller中移除
     if (channel->isNoneEvent()) {
-      pfd.fd = -channel->fd() - 1;
+      pfd.fd = -channel->fd() - 1;  // 设置为该值方便后续优化
     }
   }
 }
