@@ -69,7 +69,7 @@ string InetAddress::toIp() const {
 }
 
 uint32_t InetAddress::ipv4NetEndian() const {
-  assert(AF_INET == addr_.sin_family);
+  assert(AF_INET == family());
 
   return addr_.sin_addr.s_addr;
 }

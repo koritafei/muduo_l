@@ -67,7 +67,7 @@ void resetTimerfd(int timerfd, TimeStamp expiration) {
   memZero(&newvalue, sizeof newvalue);
 
   newvalue.it_value = howMuchTimeromow(expiration);
-  int ret           = ::timerfd_settime(timerfd, 0, &oldvalue, &newvalue);
+  int ret           = ::timerfd_settime(timerfd, 0, &newvalue, &oldvalue);
 
   if (ret) {
     LOG_SYSERR << "timerfd_settime";
@@ -115,7 +115,7 @@ TimerId TimerQueue::addTimer(TimerCallback cb,
 }
 
 void TimerQueue::cancel(TimerId timerId) {
-  loop_->runInLoop(std::bind(&TimerQueue::cancel, this, timerId));
+  loop_->runInLoop(std::bind(&TimerQueue::cancelInLoop, this, timerId));
 }
 
 void TimerQueue::addTimerInLoop(Timer *timer) {

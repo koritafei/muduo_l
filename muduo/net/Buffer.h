@@ -84,7 +84,7 @@ public:
 
   void retrieve(size_t len) {
     assert(len <= readableBytes());
-    if (len <= readableBytes()) {
+    if (len < readableBytes()) {
       readerIndex_ += len;
     } else {
       retrieveAll();
@@ -230,7 +230,7 @@ public:
   }
 
   int32_t peekInt32() const {
-    assert(readableBytes() >= sizeof(int64_t));
+    assert(readableBytes() >= sizeof(int32_t));
     int32_t be32 = 0;
     ::memcpy(&be32, peek(), sizeof be32);
 
@@ -283,7 +283,7 @@ public:
     std::copy(d, d + len, begin() + readerIndex_);
   }
 
-  void shirink(size_t reverse) {
+  void shrink(size_t reverse) {
     Buffer other;
     other.ensureWritableBytes(readableBytes() + reverse);
     other.append(toStringPiece());

@@ -16,7 +16,7 @@ namespace sockets {
 const struct sockaddr* sockaddr_cast(const struct sockaddr_in6* addr);
 }  // namespace sockets
 
-class InetAddress : public Copyable {
+class InetAddress : public muduo::Copyable {
 public:
   explicit InetAddress(uint16_t port         = 0,
                        bool     loopbackOnly = false,

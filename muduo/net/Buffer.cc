@@ -12,6 +12,8 @@
 using namespace muduo;
 using namespace muduo::net;
 
+const char Buffer::kCRLF[] = "\r\n";
+
 const size_t Buffer::kCheapPrepend;
 const size_t Buffer::kInitialSize;
 
@@ -30,7 +32,7 @@ ssize_t Buffer::readFd(int fd, int *savedErrno) {
 
   if (0 > n) {
     *savedErrno = errno;
-  } else if (writable >= implicit_cast<size_t>(n)) {
+  } else if (implicit_cast<size_t>(n) <= writable) {
     writerIndex_ += n;
   } else {
     writerIndex_ = buffer_.size();

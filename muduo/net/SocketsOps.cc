@@ -95,7 +95,7 @@ void sockets::bindOrDie(int sockfd, const struct sockaddr *addr) {
 
 void sockets::listenOrDie(int sockfd) {
   int ret = ::listen(sockfd, SOMAXCONN);
-  if (0 < ret) {
+  if (0 > ret) {
     LOG_SYSFATAL << "sockets::listenOrDie";
   }
 }
@@ -227,7 +227,7 @@ int sockets::getSocketError(int socketfd) {
   int       optval;
   socklen_t optlen = static_cast<socklen_t>(sizeof optval);
 
-  if (0 > ::getsockopt(socketfd, SOL_SOCKET, SO_ERROR, &optval, &optlen)) {
+  if (0 >= ::getsockopt(socketfd, SOL_SOCKET, SO_ERROR, &optval, &optlen)) {
     return errno;
   } else {
     return optval;

@@ -40,7 +40,7 @@ public:
         length_(static_cast<int>(strlen(ptr_))) {
   }
 
-  StringPiece(std::string &str)
+  StringPiece(const string &str)
       : ptr_(str.data()), length_(static_cast<int>(str.size())) {
   }
 

@@ -39,7 +39,7 @@ TcpClient::TcpClient(EventLoop *        loop,
       messageCallback_(defaultMessageCallback),
       retry_(false),
       connect_(true),
-      nextConnId_(false) {
+      nextConnId_(1) {
   connector_->setNewConnectionCallback(
       std::bind(&TcpClient::newConnection, this, _1));
   LOG_INFO << "TcpClient::TcpClient[" << name_ << "] - connector "
@@ -97,7 +97,7 @@ void TcpClient::stop() {
 void TcpClient::newConnection(int sockfd) {
   loop_->assertInLoopThread();
   InetAddress peerAddr(sockets::getPeerAddr(sockfd));
-  char        buf[32] = {'\0'};
+  char        buf[32];
   snprintf(buf, sizeof buf, ":%s#%d", peerAddr.toIpPort().c_str(), nextConnId_);
   ++nextConnId_;
   string connName = name_ + buf;

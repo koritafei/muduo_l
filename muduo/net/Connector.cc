@@ -1,7 +1,5 @@
 #include "Connector.h"
 
-#include <asm-generic/errno-base.h>
-#include <asm-generic/errno.h>
 #include <errno.h>
 
 #include "../base/Logging.h"
