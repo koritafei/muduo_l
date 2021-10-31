@@ -17,7 +17,7 @@ public:
     WARN,
     ERROR,
     FATAL,
-    NUM_LOG_LEVEL,
+    NUM_LOG_LEVELS,
   };  // enum LogLevel
 
   class SourceFile {
@@ -30,8 +30,16 @@ public:
       const char* slash = strrchr(data_, '/');
       if (slash) {
         data_ = slash + 1;
-        size_ -= static_cast<int>(strlen(data_));
+        size_ -= static_cast<int>(data_ - arr);
       }
+    }
+
+    explicit SourceFile(const char* filename) : data_(filename) {
+      const char* slash = strchr(filename, '/');
+      if (slash) {
+        data_ = slash + 1;
+      }
+      size_ = static_cast<int>(strlen(data_));
     }
 
   };  // class SourceFile

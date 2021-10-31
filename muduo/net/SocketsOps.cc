@@ -70,7 +70,7 @@ const struct sockaddr_in6 *sockets::sockaddr_in6_cast(
 int sockets::createNonblockingOrDie(sa_family_t family) {
 #if VALGRIND
   int sockfd = ::socket(family, SOCK_STREAM, IPPROTO_TCP);
-  if (0 < sockfd) {
+  if (0 > sockfd) {
     LOG_SYSFATAL << "sockets::createNonblockingOrDie";
   }
 
@@ -206,9 +206,9 @@ void sockets::fromIpPort(const char *        ip,
                          uint16_t            port,
                          struct sockaddr_in *addr) {
   addr->sin_family = AF_INET;
-  addr->sin_port   = hostToNetwork16(addr->sin_port);
+  addr->sin_port   = hostToNetwork16(port);
 
-  if (0 <= ::inet_pton(AF_INET, ip, &addr->sin_addr)) {
+  if (0 >= ::inet_pton(AF_INET, ip, &addr->sin_addr)) {
     LOG_SYSERR << "sockets::fromIpPort";
   }
 }
@@ -217,8 +217,8 @@ void sockets::fromIpPort(const char *         ip,
                          uint16_t             port,
                          struct sockaddr_in6 *addr) {
   addr->sin6_family = AF_INET6;
-  addr->sin6_port   = hostToNetwork16(addr->sin6_port);
-  if (0 <= ::inet_pton(AF_INET6, ip, &addr->sin6_addr)) {
+  addr->sin6_port   = hostToNetwork16(port);
+  if (0 >= ::inet_pton(AF_INET6, ip, &addr->sin6_addr)) {
     LOG_SYSERR << "sockets::fromIpPort";
   }
 }

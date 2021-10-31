@@ -53,3 +53,17 @@ target_link_libraries(Logging_unittest muduo_base)
 
 add_executable(AsyncLogging_unittest AsyncLogging_unittest.cc)
 target_link_libraries(AsyncLogging_unittest muduo_base)
+
+if(BOOSTTEST_LIBRARY)
+add_executable(LogStream_test LogStream_test.cc)
+target_link_libraries(LogStream_test muduo_net boost_unit_test_framework)
+add_test(NAME LogStream_test COMMAND LogStream_test)
+endif()
+
+add_executable(FileUtil_unittest FileUtil_unittest.cc)
+target_link_libraries(FileUtil_unittest muduo_base)
+
+
+add_executable(ProcessInfo_unittest ProcessInfo_unittest.cc)
+target_link_libraries(ProcessInfo_unittest muduo_base)
+

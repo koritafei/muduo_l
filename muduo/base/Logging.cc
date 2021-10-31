@@ -33,7 +33,7 @@ Logger::LogLevel initLogLevel() {
 
 Logger::LogLevel g_loglevel = initLogLevel();
 
-const char *LogLevelName[Logger::NUM_LOG_LEVEL] = {
+const char *LogLevelName[Logger::NUM_LOG_LEVELS] = {
     "TRACE ",
     "DEBUG ",
     "INFO  ",
@@ -94,7 +94,7 @@ Logger::Impl::Impl(LogLevel          level,
   stream_ << T(CurrentThread::tidString(), CurrentThread::tidStringLength());
   stream_ << T(LogLevelName[level], 6);
   if (savedErrno != 0) {
-    stream_ << strerror_tl(savedErrno) << " ( errno = " << savedErrno << ")";
+    stream_ << strerror_tl(savedErrno) << " ( errno = " << savedErrno << " ) ";
   }
 }
 

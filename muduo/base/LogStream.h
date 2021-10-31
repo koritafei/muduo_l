@@ -45,7 +45,7 @@ public:
     return cur_;
   }
 
-  int avail() {
+  int avail() const {
     return static_cast<int>(end() - cur_);
   }
 
@@ -126,9 +126,9 @@ public:
 
   self& operator<<(const char* str) {
     if (str) {
-      buffer_.append(str, sizeof str);
+      buffer_.append(str, strlen(str));
     } else {
-      buffer_.append("null", 6);
+      buffer_.append("(null)", 6);
     }
 
     return *this;
@@ -138,7 +138,7 @@ public:
     return operator<<(reinterpret_cast<const char*>(str));
   }
 
-  self& operator<<(const std::string& str) {
+  self& operator<<(const string& str) {
     buffer_.append(str.c_str(), str.size());
     return *this;
   }
@@ -201,7 +201,7 @@ inline LogStream& operator<<(LogStream& ls, const Fmt& fmt) {
 
 std::string formatSI(int64_t n);
 
-std::string formatICE(int64_t n);
+std::string formatIEC(int64_t n);
 
 }  // namespace muduo
 
