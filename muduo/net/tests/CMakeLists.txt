@@ -39,3 +39,7 @@ if(ZLIB_FOUND)
   # set_target_properties(zlibstream_unittest PROPERTIES COMPILE_FLAGS "-std=c++0x")
 endif()
 endif()
+
+add_executable(TcpClient_reg1 TcpClient_reg1.cc)
+target_link_libraries(TcpClient_reg1 muduo_net)
+
