@@ -2,30 +2,11 @@ include(CheckFunctionExists)
 
 check_function_exists(accept4 HAVE_ACCEPT4)
 if(NOT HAVE_ACCEPT4)
-  set_source_files_properties(SocketsOps.cc PROPERTIES COMPILE_FLAGS "-DNO_ACCEPT4")
+  #set_source_files_properties(SocketsOps.cc PROPERTIES COMPILE_FLAGS "-DNO_ACCEPT4")
 endif()
 
 set(net_SRCS
-  Acceptor.cc
   Buffer.cc
-  Channel.cc
-  Connector.cc
-  EventLoop.cc
-  InetAddress.cc
-  Poller.cc
-  socket.cc
-  SocketsOps.cc
-  TcpConnection.cc
-  TcpServer.cc
-  TcpClient.cc
-  Timer.cc
-  Poller.cc
-  TimerQueue.cc
-  EventLoopThread.cc
-  EventLoopThreadPool.cc
-  poller/DefaultPoller.cc
-  poller/EPollPoller.cc
-  poller/PollPoller.cc
   )
 
 add_library(muduo_net ${net_SRCS})
@@ -39,28 +20,8 @@ install(TARGETS muduo_net DESTINATION lib)
 #install(TARGETS muduo_net_cpp11 DESTINATION lib)
 
 set(HEADERS
-  Acceptor.h
   Buffer.h
-  Callbacks.h
-  Channel.h
-  Connector.h
   Endian.h
-  EventLoop.h
-  EventLoopThread.h
-  EventLoopThreadPool.h
-  InetAddress.h
-  TcpConnection.h
-  Poller.h
-  socket.h
-  SocketsOps.h
-  TcpClient.h
-  TcpServer.h
-  TcpConnection.h
-  Timer.h
-  TimerQueue.h
-  TimerId.h
-  poller/EPollPoller.h
-  poller/PollPoller.h
   )
 install(FILES ${HEADERS} DESTINATION include/muduo/net)
 

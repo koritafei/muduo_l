@@ -3,10 +3,8 @@
 
 #include <assert.h>
 #include <string.h>
-#include <unistd.h>
 
 #include <algorithm>
-#include <cstddef>
 #include <vector>
 
 #include "../base/Copyable.h"
@@ -15,10 +13,9 @@
 #include "Endian.h"
 
 namespace muduo {
-
 namespace net {
 
-class Buffer : public muduo::Copyable {
+class Buffer : public muduo::copyable {
 public:
   static const size_t kCheapPrepend = 8;
   static const size_t kInitialSize  = 1024;
@@ -42,7 +39,7 @@ public:
     return writerIndex_ - readerIndex_;
   }
 
-  size_t writableBytes() {
+  size_t writableBytes() const {
     return buffer_.size() - writerIndex_;
   }
 
@@ -56,7 +53,6 @@ public:
 
   const char *findCRLF() const {
     const char *crlf = std::search(peek(), beginWrite(), kCRLF, kCRLF + 2);
-
     return crlf == beginWrite() ? NULL : crlf;
   }
 
@@ -68,22 +64,21 @@ public:
     return crlf == beginWrite() ? NULL : crlf;
   }
 
-  const char *findEOL() const {
+  const char *findEOF() const {
     const void *eol = memchr(peek(), '\n', readableBytes());
-
     return static_cast<const char *>(eol);
   }
 
-  const char *findEOL(const char *start) const {
+  const char *findEOF(const char *start) const {
     assert(peek() <= start);
     assert(start <= beginWrite());
-    const void *eol = memchr(peek(), '\n', beginWrite() - start);
 
+    const void *eol = memchr(peek(), '\n', beginWrite() - start);
     return static_cast<const char *>(eol);
   }
 
   void retrieve(size_t len) {
-    assert(len <= readableBytes());
+    assert(len < readableBytes());
     if (len < readableBytes()) {
       readerIndex_ += len;
     } else {
@@ -91,10 +86,9 @@ public:
     }
   }
 
-  void retrieveUntil(const char *end) {
+  void retrieveUtil(const char *end) {
     assert(peek() <= end);
     assert(end <= beginWrite());
-
     retrieve(end - peek());
   }
 
@@ -119,13 +113,13 @@ public:
     writerIndex_ = kCheapPrepend;
   }
 
-  string retrieveAllAsString() {
+  std::string retrieveAllAsString() {
     return retrieveAsString(readableBytes());
   }
 
-  string retrieveAsString(size_t len) {
+  std::string retrieveAsString(size_t len) {
     assert(len <= readableBytes());
-    string result(peek(), len);
+    std::string result(peek(), len);
     retrieve(len);
 
     return result;
@@ -142,7 +136,7 @@ public:
   void append(const char *data, size_t len) {
     ensureWritableBytes(len);
     std::copy(data, data + len, beginWrite());
-    hasWritten(len);
+    hasWriten(len);
   }
 
   void append(const void *data, size_t len) {
@@ -164,7 +158,7 @@ public:
     return begin() + writerIndex_;
   }
 
-  void hasWritten(size_t len) {
+  void hasWriten(size_t len) {
     assert(len <= writableBytes());
     writerIndex_ += len;
   }
@@ -175,17 +169,17 @@ public:
   }
 
   void appendInt64(int64_t x) {
-    int64_t be64 = sockets::hostToNetwork64(x);
+    int64_t be64 = sockets::hostToNetWork64(x);
     append(&be64, sizeof be64);
   }
 
   void appendInt32(int32_t x) {
-    int32_t be32 = sockets::hostToNetwork32(x);
+    int32_t be32 = sockets::hostToNetWork32(be32);
     append(&be32, sizeof be32);
   }
 
   void appendInt16(int16_t x) {
-    int16_t be16 = sockets::hostToNetwork16(x);
+    int16_t be16 = sockets::networkToHost16(x);
     append(&be16, sizeof be16);
   }
 
@@ -196,28 +190,24 @@ public:
   int64_t readInt64() {
     int64_t result = peekInt64();
     retrieveInt64();
-
     return result;
   }
 
   int32_t readInt32() {
     int32_t result = peekInt32();
-    retrieveInt32();
-
+    retrieveInt64();
     return result;
   }
 
   int16_t readInt16() {
     int16_t result = peekInt16();
-    retrieveInt16();
-
+    retrieveInt64();
     return result;
   }
 
-  int8_t readInt8() {
-    int8_t result = peekInt8();
+  int64_t readInt8() {
+    int64_t result = peekInt8();
     retrieveInt8();
-
     return result;
   }
 
@@ -226,47 +216,44 @@ public:
     int64_t be64 = 0;
     ::memcpy(&be64, peek(), sizeof be64);
 
-    return sockets::networkTohost64(be64);
+    return sockets::networkToHost64(be64);
   }
 
-  int32_t peekInt32() const {
+  int64_t peekInt32() const {
     assert(readableBytes() >= sizeof(int32_t));
     int32_t be32 = 0;
     ::memcpy(&be32, peek(), sizeof be32);
 
-    return sockets::networkTohost32(be32);
+    return sockets::networkToHost32(be32);
   }
 
-  int16_t peekInt16() const {
+  int64_t peekInt16() const {
     assert(readableBytes() >= sizeof(int16_t));
     int16_t be16 = 0;
     ::memcpy(&be16, peek(), sizeof be16);
 
-    return sockets::networkTohost16(be16);
+    return sockets::networkToHost16(be16);
   }
 
-  int8_t peekInt8() const {
+  int64_t peekInt8() const {
     assert(readableBytes() >= sizeof(int8_t));
-    int8_t x = *peek();
+    int8_t be8 = *peek();
 
-    return x;
+    return be8;
   }
 
   void prependInt64(int64_t x) {
-    int64_t be64 = sockets::hostToNetwork64(x);
-
+    int64_t be64 = sockets::hostToNetWork64(x);
     prepend(&be64, sizeof be64);
   }
 
   void prependInt32(int32_t x) {
-    int32_t be32 = sockets::hostToNetwork32(x);
-
+    int32_t be32 = sockets::hostToNetWork32(x);
     prepend(&be32, sizeof be32);
   }
 
   void prependInt16(int16_t x) {
-    int16_t be16 = sockets::hostToNetwork16(x);
-
+    int16_t be16 = sockets::hostToNetWork16(x);
     prepend(&be16, sizeof be16);
   }
 
@@ -276,9 +263,7 @@ public:
 
   void prepend(const void *data, size_t len) {
     assert(len <= prependableBytes());
-
     readerIndex_ -= len;
-
     const char *d = static_cast<const char *>(data);
     std::copy(d, d + len, begin() + readerIndex_);
   }
@@ -294,15 +279,9 @@ public:
     return buffer_.capacity();
   }
 
-  ssize_t readFd(int fd, int *savedErrno);
+  ssize_t readFd(int fd, int *saveErrno);
 
 private:
-  std::vector<char> buffer_;
-  size_t            readerIndex_;
-  size_t            writerIndex_;
-
-  static const char kCRLF[];
-
   char *begin() {
     return &*buffer_.begin();
   }
@@ -312,26 +291,28 @@ private:
   }
 
   void makeSpace(size_t len) {
-    if (len + kCheapPrepend > writableBytes() + prependableBytes()) {
+    if (writableBytes() + prependableBytes() < len + kCheapPrepend) {
       buffer_.resize(writerIndex_ + len);
     } else {
       assert(kCheapPrepend < readerIndex_);
       size_t readable = readableBytes();
-
       std::copy(begin() + readerIndex_,
                 begin() + writerIndex_,
                 begin() + kCheapPrepend);
       readerIndex_ = kCheapPrepend;
       writerIndex_ = readerIndex_ + readable;
-
       assert(readable == readableBytes());
     }
   }
 
-};  // class Buffer
+  std::vector<char> buffer_;
+  size_t            readerIndex_;
+  size_t            writerIndex_;
+
+  static const char kCRLF[];
+};
 
 }  // namespace net
-
 }  // namespace muduo
 
 #endif /* __BUFFER_H__ */

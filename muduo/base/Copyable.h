@@ -1,12 +1,14 @@
-#ifndef __CAPYABLE_H__
-#define __CAPYABLE_H__
+#ifndef __COPYABLE_H__
+#define __COPYABLE_H__
 
 namespace muduo {
-class Copyable {
+
+class copyable {
 protected:
-  Copyable()  = default;
-  ~Copyable() = default;
+  copyable()  = default;
+  ~copyable() = default;
 };
+
 }  // namespace muduo
 
-#endif /* __CAPYABLE_H__ */
+#endif /* __COPYABLE_H__ */

@@ -16,7 +16,7 @@ const int kSmallBuffer = 4000;
 const int kLargeBuffer = 4000 * 1000;
 
 template <int SIZE>
-class FixedBuffer : Noncopyable {
+class FixedBuffer : noncopyable {
 public:
   FixedBuffer() : cur_(data_) {
     setCookie(cookieStart);
@@ -24,6 +24,10 @@ public:
 
   ~FixedBuffer() {
     setCookie(cookieEnd);
+  }
+
+  void setCookie(void (*cookie)()) {
+    cookie_ = cookie;
   }
 
   void append(const char* buf, size_t len) {
@@ -58,14 +62,13 @@ public:
   }
 
   void bzero() {
-    memZero(data_, sizeof data_);
+    memoZero(data_, sizeof data_);
   }
 
+  // for used by GDB
   const char* debugString();
-  void        setCookie(void (*cookie)()) {
-    cookie_ = cookie;
-  }
 
+  // for used by unit test
   std::string toString() const {
     return std::string(data_, length());
   }
@@ -75,22 +78,22 @@ public:
   }
 
 private:
-  char  data_[SIZE];
-  char* cur_;
-  void (*cookie_)();
+  const char* end() const {
+    return data_ + sizeof data_;
+  }
 
   static void cookieStart();
   static void cookieEnd();
-  const char* end() const {
-    return data_ + sizeof(data_);
-  }
 
-};  // class FixedBuffer
+  void (*cookie_)();
+
+  char  data_[SIZE];
+  char* cur_;
+};
 
 }  // namespace detail
 
-class LogStream : Noncopyable {
-private:
+class LogStream : noncopyable {
   typedef LogStream self;
 
 public:
@@ -112,8 +115,9 @@ public:
 
   self& operator<<(const void*);
 
-  self& operator<<(float f) {
-    *this << static_cast<double>(f);
+  self& operator<<(float v) {
+    *this << static_cast<double>(v);
+
     return *this;
   }
 
@@ -138,13 +142,13 @@ public:
     return operator<<(reinterpret_cast<const char*>(str));
   }
 
-  self& operator<<(const string& str) {
-    buffer_.append(str.c_str(), str.size());
+  self& operator<<(const std::string& v) {
+    buffer_.append(v.c_str(), v.size());
     return *this;
   }
 
-  self& operator<<(const StringPiece& str) {
-    buffer_.append(str.data(), str.size());
+  self& operator<<(const StringPiece& v) {
+    buffer_.append(v.data(), v.size());
     return *this;
   }
 
@@ -166,15 +170,14 @@ public:
   }
 
 private:
-  Buffer           buffer_;
-  static const int kMaxNumericSize = 48;
-
   void staticCheck();
 
   template <typename T>
-  void formatInteger(T v);
+  void formatInteger(T);
 
-};  // class LogStream
+  Buffer           buffer_;
+  static const int kMaxNumbericSize = 48;
+};
 
 class Fmt {
 public:
@@ -192,11 +195,12 @@ public:
 private:
   char buf_[32];
   int  length_;
-};  // class Fmt
+};
 
-inline LogStream& operator<<(LogStream& ls, const Fmt& fmt) {
-  ls.append(fmt.data(), fmt.length());
-  return ls;
+inline LogStream& operator<<(LogStream& s, const Fmt& fmt) {
+  s.append(fmt.data(), fmt.length());
+
+  return s;
 }
 
 std::string formatSI(int64_t n);

@@ -1,38 +1,37 @@
-#ifndef __THREAD_H__
-#define __THREAD_H__
+#ifndef __THREAD__H__
+#define __THREAD__H__
 
-#include <pthread.h>
-
-#include <functional>
-#include <memory>
+#include <boost/core/noncopyable.hpp>
+#include <boost/function.hpp>
+#include <boost/function/function_fwd.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
 
 #include "Atomic.h"
-#include "CountDownLatch.h"
-#include "CurrentThread.h"
-#include "Types.h"
 
 namespace muduo {
 
-class Thread : Noncopyable {
+class Thread : public boost::noncopyable {
 public:
-  typedef std::function<void()> ThreadFunc;
+  typedef boost::function<void()> ThreadFunc;
 
-  explicit Thread(ThreadFunc, const std::string &name = string());
+  explicit Thread(const ThreadFunc &, const std::string &name = std::string());
 
   ~Thread();
 
   void start();
-  int  join();
+  void join();
 
   bool started() const {
     return started_;
   }
 
   pid_t tid() const {
-    return tid_;
+    return *tid_;
   }
 
-  const std::string &name() const {
+  const std::string name() const {
     return name_;
   }
 
@@ -41,21 +40,22 @@ public:
   }
 
 private:
-  bool        started_;
-  bool        joined_;
-  pthread_t   pthreadId_;
-  pid_t       tid_;
-  ThreadFunc  func_;
-  std::string name_;
-
-  CountDownLatch latch_;
+  bool                     started_;
+  bool                     joined_;
+  pthread_t                pthreadId_;
+  boost::shared_ptr<pid_t> tid_;
+  ThreadFunc               func_;
+  std::string              name_;
 
   static AtomicInt32 numCreated_;
+};
 
-  void setDefaultName();
-
-};  // class Thread
+namespace CurrentThread {
+pid_t       tid();
+const char *name();
+bool        isMainThread();
+}  // namespace CurrentThread
 
 }  // namespace muduo
 
-#endif /* __THREAD_H__ */
+#endif /* __THREAD__H__ */
